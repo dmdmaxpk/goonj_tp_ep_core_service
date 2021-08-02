@@ -31,8 +31,18 @@ deleteUser = async(msisdn) => {
 }
 
 getUserByMsisdn = async(msisdn) => {
-	return await Axios.get(`${config.user_service_url}/user?msisdn=${msisdn}`)
+	return await Axios.get(`${config.user_service_url}/get_user_by_msisdn?msisdn=${msisdn}`)
 	.then(res =>{
+		let result = res.data;
+		return result
+	})
+	.catch(err =>{
+		return err
+	})
+}
+createUser = async(userObj) => {
+	return await Axios.post(`${config.user_service_url}/create_user`, userObj)
+	.then(res =>{ 
 		let result = res.data;
 		return result
 	})
@@ -42,16 +52,6 @@ getUserByMsisdn = async(msisdn) => {
 }
 subscriberQuery = async(msisdn) => {
 	return await Axios.get(`${config.subscriber_query}/sub?msisdn=${msisdn}`)
-	.then(res =>{ 
-		let result = res.data;
-		return result
-	})
-	.catch(err =>{
-		return err
-	})
-}
-createUser = async(userObj) => {
-	return await Axios.post(`${config.user_service_url}/create`, userObj)
 	.then(res =>{ 
 		let result = res.data;
 		return result
@@ -92,7 +92,7 @@ getSubscriberByUserId = async(id) => {
 	})
 }
 getSubscriptionByPackageId = async(subscriber_id, package_id) => {
-	return await Axios.get(`${config.subscriber_query}/easypaisa?subscriber_id=${subscriber_id}&package_id=${package_id}`)
+	return await Axios.get(`${config.subscriber_query}/getSubscriptionByPackageId?subscriber_id=${subscriber_id}&package_id=${package_id}`)
 	.then(res =>{ 
 		let result = res.data;
 		return result
@@ -103,7 +103,7 @@ getSubscriptionByPackageId = async(subscriber_id, package_id) => {
 }
 
 getPackagesOfSubscriber = async(id) => {
-	return await Axios.get(`${config.subscriber_query}/packages?id=${id}`)
+	return await Axios.get(`${config.subscriber_query}/getPackagesOfSubscriber?id=${id}`)
 	.then(res =>{ 
 		let result = res.data;
 		return result
@@ -114,7 +114,7 @@ getPackagesOfSubscriber = async(id) => {
 }
 
 sendMessage = async(message, msisdn) => {
-	return await Axios.post(`${config.message_service}/sms`, {message, msisdn})
+	return await Axios.post(`${config.message_service}/messages/sms`, {message, msisdn})
 	.then(res =>{ 
 		let result = res.data;
 		return result
