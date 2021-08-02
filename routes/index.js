@@ -2,9 +2,8 @@ const express = require('express');
 const router = express.Router();
 
 // Service Label
-router.get('/', (req, res) => res.send("Goonj OTP Microservice"));
+router.get('/', (req, res) => res.send("TP/EP Core Microservice"));
 
-router.use('/payment',    require('./paymentRoute'));
-router.use('/otp',    require('./otpRoutes'));
+router.use('/core',require('./paymentRoute'));
 
 module.exports = router;
