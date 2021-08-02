@@ -1,21 +1,24 @@
-const axios = require('axios');
 const config = require('../config');
-
 const apiTokenRepo = require('../repos/ApiTokenRepo');
 
 const BillingRepository = require('../repos/BillingRepository');
 const repo = new BillingRepository();
 
-exports.generateToken = async (req, res) => {
+exports.getToken = async (req, res) => {
+    let currentToken = await apiTokenRepo.getToken();
+    res.send({code: currentToken === undefined ? config.codes.code_error : config.codes.code_success, token: currentToken});
+}
+
+exports.updateToken = async (req, res) => {
     let token = await repo.generateToken();
     if(token){
         // save to database
         let currentToken = await apiTokenRepo.getToken();
-        currentToken === undefined ? apiTokenRepo.createToken(token) : apiTokenRepo.updateToken(token);
-        res.send({code: config.codes.code_success, token: token.access_token});
+        currentToken === undefined ? apiTokenRepo.createToken(token.access_token) : apiTokenRepo.updateToken(token.access_token);
+        res.send({code: config.codes.code_success, message: 'Successfully updated', token: token.access_token});
     }else{
         let previousToken = await apiTokenRepo.getToken();
-        res.send({code: config.codes.code_error, old_token: previousToken});
+        res.send({code: config.codes.code_error, message: 'Failed to update token', old_token: previousToken});
     }
 }
 
@@ -51,7 +54,7 @@ exports.sendMessage = async (req, res) => {
 
 exports.subscriberQuery = async (req, res) => {
     let apiToken = await apiTokenRepo.getToken();
-    let {msisdn} = req.body;
+    let {msisdn} = req.query;
     if(msisdn && apiToken){
         try{
             let response = await repo.subscriberQuery(msisdn, apiToken);
