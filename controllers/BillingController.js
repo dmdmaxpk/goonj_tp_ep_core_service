@@ -7,12 +7,12 @@ const BillingRepository = require('../repos/BillingRepository');
 const repo = new BillingRepository();
 
 exports.generateToken = async (req, res) => {
-    let token = repo.generateToken();
+    let token = await repo.generateToken();
     if(token){
         // save to database
         let currentToken = await apiTokenRepo.getToken();
         currentToken === undefined ? apiTokenRepo.createToken(token) : apiTokenRepo.updateToken(token);
-        res.send({code: config.codes.code_success, token: token});
+        res.send({code: config.codes.code_success, token: token.access_token});
     }else{
         let previousToken = await apiTokenRepo.getToken();
         res.send({code: config.codes.code_error, old_token: previousToken});
