@@ -39,12 +39,12 @@ class BillingRepository {
         })
     };
 
-    async charge (msisdn, pricePoint, transaction_id, partner_id, apiToken)  {
+    async charge (msisdn, price_point, transaction_id, partner_id, apiToken)  {
 
         let form = {
             "correlationID": transaction_id,
             "msisdn": msisdn,
-            "chargableAmount": pricePoint,
+            "chargableAmount": price_point,
             "PartnerID": partner_id,
             "ProductID": "GoonjDCB-Charge"
         }

@@ -28,10 +28,10 @@ exports.charge = async (req, res) => {
     if(msisdn && amount && transaction_id && partner_id && apiToken){
         try{
             let response = await repo.charge(msisdn, amount, transaction_id, partner_id, apiToken);
-            if(response.data.Message === "Success"){
-                res.send({code: config.codes.code_success, message: message, full_api_response: response});
+            if(response.Message === "Success"){
+                res.send({code: config.codes.code_success, message: 'Success', full_api_response: response});
             }else{
-                res.send({code: config.codes.code_billing_failed, data: response.data, full_api_response: response});
+                res.send({code: config.codes.code_billing_failed, data: response, full_api_response: response});
             }
         }catch(e){
             res.send({code: config.codes.code_error, message: e.message});
