@@ -78,7 +78,7 @@ class BillingRepository {
                 url: config.telenor_dcb_api_baseurl + `subscriberQuery/v3/checkinfo/${msisdn}`,
                 headers: {'Authorization': 'Bearer '+apiToken, 'Content-Type': 'application/json' }
             }).then(function(response){
-                resolve(response.response.data);
+                resolve(response.data);
             }).catch(function(err){
                 reject(err.response.data);
             });
