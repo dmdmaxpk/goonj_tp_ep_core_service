@@ -60,6 +60,7 @@ exports.subscriberQuery = async (req, res) => {
             let response = await repo.subscriberQuery(msisdn, apiToken);
             res.send({code: config.codes.code_success, response: response});
         }catch(e){
+            console.log(e)
             res.send({code: config.codes.code_error, message: e.message});
         }
     }else{
