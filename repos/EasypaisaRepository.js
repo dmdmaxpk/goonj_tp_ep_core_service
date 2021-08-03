@@ -48,7 +48,7 @@ class EasypaisaRepository {
             self.generateSignature(data);
             data.signature = self.signature;
             console.log('Ep otp data', data);
-            
+
             let resp = await axios({
                     method: 'post',
                     url: self.generateotpUrl,
@@ -75,90 +75,48 @@ class EasypaisaRepository {
    * Params: mobileAccountNo, transactionAmount, OTP
    * Return Type: Object
    * */
-    async initiateLinkTransaction(mobileAccountNo, transactionAmount, otp){
-        console.log('initiateLinkTransaction: ', mobileAccountNo, transactionAmount, otp);
-
-        // TEST DATA START
-        /*let self = this;
-        await self.getKey();
-        self.getOrderId();
-
-        let returnObj = {};
-        returnObj.transaction_id = self.orderId;
+    async initiateLinkTransaction(msisdn, amount, transaction_id, otp,){
         
-        let data = { 
-           response:{ 
-                orderId: 'GEP_B1ZcM-ybP',
-                storeId: '42221',
-                transactionId: '8293012755',
-                transactionDateTime: '29/07/2020 07:07 PM',
-                tokenNumber: '0000864314',
-                mobileAccountNo: '03336106083',
-                emailAddress: 'muhammad.azam@dmdmax.com',
-                responseCode: '0000',
-                responseDesc: 'SUCCESS' 
-            } 
-        }
-
-        returnObj.message = "success";
-        returnObj.response = data;
-
-        return returnObj;*/
-
-        // TEST DATA END
-
         try {
             let self = this;
             await self.getKey();
             self.getOrderId();
             let data = {
                 'request': {
-                    'orderId': self.orderId,
+                    'orderId': transaction_id,
                     'storeId': self.storeId,
-                    'transactionAmount': '' + transactionAmount,
+                    'transactionAmount': '' + amount,
                     'transactionType': 'MA',
-                    'mobileAccountNo': mobileAccountNo,
+                    'mobileAccountNo': msisdn,
                     'emailAddress': self.emailAddress,
                     'otp': otp
                 }
             };
-            console.log('initiateLinkTransaction: data: ', data);
-            console.log('initiateLinkTransaction: URL: ', self.initiatelinktransactionUrl);
-
+            
             self.generateSignature(data);
-            data.signature = self.signature;    
+            data.signature = self.signature;
+
+            console.log('Ep link transaction data', data);
             let resp = await axios({
                 method: 'post',
-                //url: config.telenor_dcb_api_baseurl + 'eppinless/v1/initiate-link-transaction',
                 url: self.initiatelinktransactionUrl,
                 data: data,
                 headers: {'Credentials': self.base64_cred, 'Authorization': 'Bearer '+config.telenor_dcb_api_token, 'Content-Type': 'application/json' }
             }).then(response => {
                 return response;
             }).catch(err => {
-                console.log("error occurred 1: ", err);
+                console.log('Ep link transaction error 1', err);
             });
             
-            let returnObj = {};
-            returnObj.transaction_id = self.orderId;
-            
             if (resp.status === 200 && resp.data.response.responseDesc === "SUCCESS"){
-                console.log('initiateLinkTransaction: success : response 2: ');
-                returnObj.message = "success";
-                returnObj.response = resp.data;
-
-                // console.log('initiateLinkTransaction: success : tokenNumber: ', resp.data.response.tokenNumber);
-                // Now close the link between Merchant and Easypaisa after successful transaction
-                // self.deactivateLinkTransaction(mobileAccountNo, resp.data.response.tokenNumber);
+                console.log('Ep link transaction success', resp.data);
+                return resp.data;
+            }else{
+                console.log('Ep link transaction failed', resp.data);
+                return resp.data;
             }
-            else{
-                console.log('initiateLinkTransaction: failed : response 2: ');
-                returnObj.message = "failed";
-                returnObj.response = resp.data;
-            }
-            return returnObj;
         } catch(err){
-            console.log('initiateLinkTransaction error 2: ', err);
+            console.log('Ep link transaction error 2', err);
             throw err;
         }
     }
@@ -188,6 +146,7 @@ class EasypaisaRepository {
 
             self.generateSignature(data);
             data.signature = self.signature;
+
             console.log('EP Pinless Data: ', data);
             let resp = await axios({
                 method: 'post',

@@ -35,7 +35,7 @@ exports.charge = async (req, res) => {
                     res.send({code: config.codes.code_error, message: 'Easypaisa token missing'});
                 }else{
                     let response = await epRepo.initiatePinlessTransaction(msisdn, amount, transaction_id, ep_token);
-                    if(response.message === "success"){
+                    if(response && response.response && response.response.responseDesc && response.response.responseDesc === 'SUCCESS'){
                         res.send({code: config.codes.code_success, message: 'success', full_api_response: response});
                     }else{
                         res.send({code: config.codes.code_billing_failed, message: 'failed', full_api_response: response});
@@ -73,6 +73,20 @@ exports.sendEpOtp = async (req, res) => {
     if(msisdn){
         let response = await epRepo.generateOPT(msisdn)
         res.send({code: response === 'success' ? config.codes.code_success : config.codes.code_billing_failed, message: response === 'success' ? 'OTP sent' : 'Failed to send OTP'});
+    }else{
+        res.send({code: config.codes.code_error, message: 'Critical parameters are missing.'});
+    }
+}
+
+exports.epLinkTransaction = async (req, res) => {
+    let {msisdn, amount, transaction_id, otp} = req.body;
+    if(msisdn && amount && transaction_id && otp){
+        let response = await epRepo.initiateLinkTransaction(msisdn, amount, transaction_id, otp)
+        if(response && response.response && response.response.responseDesc && response.response.responseDesc === 'SUCCESS'){
+            res.send({code: config.codes.code_success, message: 'success', full_api_response: response});
+        }else{
+            res.send({code: config.codes.code_billing_failed, message: 'failed', full_api_response: response});
+        }
     }else{
         res.send({code: config.codes.code_error, message: 'Critical parameters are missing.'});
     }

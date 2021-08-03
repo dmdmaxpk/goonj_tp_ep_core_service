@@ -10,5 +10,6 @@ router.route('/update-api-token').post(controller.updateToken);
 router.route('/charge').post(controller.charge);
 router.route('/send-sms').post(controller.sendMessage);
 router.route('/send-ep-otp').post(controller.sendEpOtp);
+router.route('/init-link-transaction').post(controller.epLinkTransaction);
 
 module.exports = router;
