@@ -58,6 +58,7 @@ exports.subscriberQuery = async (req, res) => {
     if(msisdn && apiToken){
         try{
             let response = await repo.subscriberQuery(msisdn, apiToken);
+            console.log(response);
             if (response.Message === "Success" && response.AssetStatus === "Active") {
                 res.send({code: config.codes.code_success, operator: 'tp', full_api_response: response});
             }else{

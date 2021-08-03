@@ -80,7 +80,6 @@ class BillingRepository {
             }).then(function(response){
                 resolve(response);
             }).catch(function(err){
-                console.error(err);
                 reject(err.response.data);
             });
         });
