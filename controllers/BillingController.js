@@ -58,10 +58,13 @@ exports.subscriberQuery = async (req, res) => {
     if(msisdn && apiToken){
         try{
             let response = await repo.subscriberQuery(msisdn, apiToken);
-            res.send({code: config.codes.code_success, response: response});
+            if (response.Message === "Success" && response.AssetStatus === "Active") {
+                res.send({code: config.codes.code_success, operator: 'tp', full_api_response: response});
+            }else{
+                res.send({code: config.codes.code_success, operator: 'ntp', full_api_response: response});
+            }
         }catch(e){
-            console.log(e)
-            res.send({code: config.codes.code_error, message: e.message});
+            res.send({code: config.codes.code_success, operator: 'ntp', full_api_response: e});
         }
     }else{
         res.send({code: config.codes.code_error, message: 'Critical parameters are missing.'});

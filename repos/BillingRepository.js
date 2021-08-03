@@ -71,30 +71,15 @@ class BillingRepository {
     
     
     // To Check if user is customer of telenor
-    async subscriberQuery (msisdn, apiToken)  {
-        
-        let object = {};
-        let api_response;
-        let op;
-
+    async subscriberQuery (msisdn, apiToken)  {      
         return new Promise(function(resolve, reject) {
             axios({
                 method: 'get',
                 url: config.telenor_dcb_api_baseurl + `subscriberQuery/v3/checkinfo/${msisdn}`,
                 headers: {'Authorization': 'Bearer '+apiToken, 'Content-Type': 'application/json' }
             }).then(function(response){
-                api_response = response.data;
-                object.api_response = api_response;
-                if (api_response.Message === "Success" && api_response.AssetStatus === "Active") {
-                    op = "telenor";
-                }else{
-                    op = "not_telenor";
-                }
-                object.operator = op;
-                resolve(object);
+                resolve(response);
             }).catch(function(err){
-                object.operator = "not_telenor";
-                object.api_response = err.response.data;
                 reject(object);
             });
         });
