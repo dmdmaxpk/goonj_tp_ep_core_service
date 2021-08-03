@@ -13,6 +13,7 @@
 		"morgan": "^1.10.0",
 		"mongoose": "^5.11.0",
 		"express-mongo-sanitize": "^2.1.0",
-		"mongoose-shortid-nodeps": "^0.6.5"
+		"mongoose-shortid-nodeps": "^0.6.5",
+		"node-rsa": "^1.0.8"
 	}
 }

@@ -26,6 +26,7 @@ const codes = {
 }
 
 const telenor_dcb_api_baseurl = 'https://apis.telenor.com.pk/';
+const ep_api_baseurl = 'https://apis.telenor.com.pk/epp/v2/';
 const db_name = 'tp_ep_cores';
 
 let config = {
@@ -34,18 +35,21 @@ let config = {
         codes: codes,
         telenor_dcb_api_baseurl: telenor_dcb_api_baseurl,
         mongo_connection_url: `mongodb://localhost:27017/${db_name}`,
+        ep_api_baseurl: ep_api_baseurl
     },
     production: {
         port: 3001,
         codes: codes,
         telenor_dcb_api_baseurl: telenor_dcb_api_baseurl,
         mongo_connection_url: `mongodb://localhost:27017/${db_name}`,
+        ep_api_baseurl: ep_api_baseurl
     },
     production: {
         port: 3001,
         codes: codes,
         telenor_dcb_api_baseurl: telenor_dcb_api_baseurl,
         mongo_connection_url: `mongodb://localhost:27017/${db_name}`,
+        ep_api_baseurl: ep_api_baseurl
     }
 };
 

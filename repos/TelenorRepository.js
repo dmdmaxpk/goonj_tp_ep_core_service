@@ -1,9 +1,7 @@
 const axios = require('axios');
 const config = require('../config');
 
-const apiTokenRepo = require('../repos/ApiTokenRepo');
-
-class BillingRepository {
+class TelenorRepository {
 
     async generateToken () {
         return new Promise(function(resolve, reject) {
@@ -49,8 +47,7 @@ class BillingRepository {
             "ProductID": "GoonjDCB-Charge"
         }
         
-        let label = "label " + Date.now() + Math.random();
-        console.time("charge api time start - " + label);
+        console.log(`Form Data: ${form}`)
         return new Promise(function(resolve, reject) {
             axios({
                 method: 'post',
@@ -58,17 +55,14 @@ class BillingRepository {
                 headers: {'Authorization': 'Bearer '+apiToken, 'Content-Type': 'application/json' },
                 data: form
             }).then(function(response){
-                console.timeEnd("charge api time end - " + label);
-                console.log(response.data);
+                console.log(`Response: ${response.data}`)
                 resolve(response.data);
             }).catch(function(err){
-                console.log(err);
-                console.timeEnd("charge api time end with error - " + label);
                 if(err && err.response && err.response.data){
-                    console.log(err.response.data);
+                    console.error(`Error: ${err.response.data}`)
                     reject(err.response.data);
                 }else{
-                    console.log(err);
+                    console.error(err);
                     reject({error_message: err.message});
                 }
             });
@@ -93,4 +87,4 @@ class BillingRepository {
     }
 }
 
-module.exports = BillingRepository;
+module.exports = TelenorRepository;
