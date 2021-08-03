@@ -81,7 +81,7 @@ class BillingRepository {
                 resolve(response);
             }).catch(function(err){
                 console.error(err);
-                reject(err);
+                reject(err.response.data);
             });
         });
         
