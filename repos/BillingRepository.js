@@ -62,6 +62,7 @@ class BillingRepository {
                 console.log(response.data);
                 resolve(response.data);
             }).catch(function(err){
+                console.log(err);
                 console.timeEnd("charge api time end with error - " + label);
                 if(err && err.response && err.response.data){
                     console.log(err.response.data);
