@@ -34,7 +34,7 @@ exports.charge = async (req, res) => {
                 res.send({code: config.codes.code_billing_failed, data: response, full_api_response: response});
             }
         }catch(e){
-            res.send({code: config.codes.code_error, message: e.message});
+            res.send({code: config.codes.code_error, message: e});
         }
     }else{
         res.send({code: config.codes.code_error, message: 'Critical parameters are missing.'});
