@@ -59,12 +59,12 @@ class BillingRepository {
                 data: form
             }).then(function(response){
                 console.timeEnd("charge api time end - " + label);
-                console.log(response);
-                resolve(response);
+                console.log(response.data);
+                resolve(response.data);
             }).catch(function(err){
-                console.log(err);
                 console.timeEnd("charge api time end with error - " + label);
-                reject(err);
+                console.log(err.response.data);
+                reject(err.response.data);
             });
         })
     }
