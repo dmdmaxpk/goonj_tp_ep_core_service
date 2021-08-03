@@ -20,16 +20,6 @@ class EasypaisaRepository {
         this.base64_cred = Buffer.from(this.username+":"+this.password).toString('base64');
     }
 
-     /*
-   * Boot the script to get new User OTP
-   * Params: mobileAccountNo (user mobile number)
-   * Return Type: Object
-   * */
-     async bootOptScript(msisdn){
-        await this.getKey();
-        return await this.generateOPT(msisdn);
-    }
-
         /*
     * Telenor OTP - Merchant app call to get user OTP
     * Private key is used to generate signature
@@ -55,11 +45,11 @@ class EasypaisaRepository {
                     data: data,
                     headers: {'Credentials': self.base64_cred, 'Authorization': 'Bearer '+config.telenor_dcb_api_token, 'Content-Type': 'application/json'}
                 }).then(response => {
+                    console.log('Ep otp response', resp.data);
                     return response;
                 }).catch(err => {
-                    console.log("Ep otp error 1", err);
+                    console.log("Ep otp error 1", err.response.data);
                 });
-            console.log('Ep otp response', resp.data);
             if (resp.status === 200)
                 return 'success';
             else
@@ -105,7 +95,7 @@ class EasypaisaRepository {
             }).then(response => {
                 return response;
             }).catch(err => {
-                console.log('Ep link transaction error 1', err);
+                console.log('Ep link transaction error 1', err.response.data);
             });
             
             if (resp.status === 200 && resp.data.response.responseDesc === "SUCCESS"){
@@ -156,7 +146,7 @@ class EasypaisaRepository {
             }).then(response => {
                 return response;
             }).catch(err => {
-                console.log("Ep error occurred 1", err);
+                console.log("Ep error occurred 1", err.response.data);
             });
 
             if (resp.status === 200 && resp.data.response.responseDesc === "SUCCESS"){
@@ -186,16 +176,6 @@ class EasypaisaRepository {
         this.publicKey = publicKey;
         this.privateKey = privateKey;
         return {'code': config.codes.code_success, 'message': 'Public and private keys are generated successfully', 'method': 'generateKeys'};
-    }
-
-
-    /*
-    * Used to update private key object.
-    * Params: null
-    * Return Type: null
-    * */
-    getKey(){
-        this.privateKey = helper.easypaisaPrivateKey();
     }
 
     /*
