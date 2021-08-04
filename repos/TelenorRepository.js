@@ -21,6 +21,7 @@ class TelenorRepository {
     // To send messages
     async sendMessage(msisdn, message, apiToken)  {
         var form = { messageBody: message, recipientMsisdn: msisdn, source: 'Goonj' };
+        console.log("Sms Data", form);
 
         return new Promise(function(resolve, reject) {
             axios({
@@ -29,7 +30,7 @@ class TelenorRepository {
                 headers: {'Authorization': 'Bearer '+apiToken, 'Content-Type': 'application/json' },
                 data: form
             }).then(function(response){
-                console.log("RESPONSE SMS###", response);
+                console.log("Sms Response", response.data);
                 resolve(response.data);
             }).catch(function(err){
                 reject(err);
