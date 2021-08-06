@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const config = require('../config');
 const ApiToken = mongoose.model('ApiToken');
 
 createToken = async(new_token) => {
@@ -10,6 +11,7 @@ createToken = async(new_token) => {
 getToken = async() => {
     let result = await ApiToken.findOne();
     if(result){
+        config.telenor_dcb_api_token = result.token;
         return result.token;
     }
     return undefined;
