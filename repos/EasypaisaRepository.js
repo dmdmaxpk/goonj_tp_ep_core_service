@@ -85,11 +85,12 @@ class EasypaisaRepository {
             data.signature = self.signature;
 
             console.log('Ep link transaction data', data);
+            let tp_token = await getToken();
             let resp = await axios({
                 method: 'post',
                 url: self.initiatelinktransactionUrl,
                 data: data,
-                headers: {'Credentials': self.base64_cred, 'Authorization': 'Bearer '+getToken(), 'Content-Type': 'application/json' }
+                headers: {'Credentials': self.base64_cred, 'Authorization': 'Bearer '+tp_token, 'Content-Type': 'application/json' }
             }).then(response => {
                 return response;
             }).catch(err => {
@@ -136,11 +137,12 @@ class EasypaisaRepository {
             data.signature = self.signature;
 
             console.log('EP Pinless Data: ', data);
+            let tp_token = await getToken();
             let resp = await axios({
                 method: 'post',
                 url: self.initiatepinlesstransactionUrl,
                 data: data,
-                headers: {'Credentials': self.base64_cred, 'Authorization': 'Bearer '+getToken(), 'Content-Type': 'application/json' }
+                headers: {'Credentials': self.base64_cred, 'Authorization': 'Bearer '+tp_token, 'Content-Type': 'application/json' }
             }).then(response => {
                 return response;
             }).catch(err => {
