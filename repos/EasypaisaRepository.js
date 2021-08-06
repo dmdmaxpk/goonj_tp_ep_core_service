@@ -49,6 +49,7 @@ class EasypaisaRepository {
                     return response;
                 }).catch(err => {
                     // console.log("Ep otp error 1", err.response.data);
+                    return err
                 });
             console.log("warning ",resp)
             if (resp.status === 200)
