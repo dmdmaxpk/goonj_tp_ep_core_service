@@ -32,7 +32,7 @@ exports.charge = async (req, res) => {
     if(msisdn && amount && transaction_id && partner_id && payment_source && apiToken){
         try{
             if(payment_source === 'easypaisa'){
-                if(ep_token){
+                if(!ep_token){
                     res.send({code: config.codes.code_error, message: 'Easypaisa token missing'});
                 }else{
                     let response = await epRepo.initiatePinlessTransaction(msisdn, amount, transaction_id, ep_token);
