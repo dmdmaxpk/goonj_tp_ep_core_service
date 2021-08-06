@@ -37,7 +37,7 @@ class EasypaisaRepository {
         try {
             self.generateSignature(data);
             data.signature = self.signature;
-            console.log('Ep otp data', data);
+            console.log('Ep otp data', data, "telenor_dcb_api_token", config.telenor_dcb_api_token);
 
             let resp = await axios({
                     method: 'post',
