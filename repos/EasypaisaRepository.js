@@ -45,19 +45,18 @@ class EasypaisaRepository {
                     data: data,
                     headers: {'Credentials': self.base64_cred, 'Authorization': 'Bearer '+config.telenor_dcb_api_token, 'Content-Type': 'application/json'}
                 }).then(response => {
-                    // console.log('Ep otp response', resp.data);
+                    console.log('Ep otp response', resp.data);
                     return response;
                 }).catch(err => {
-                    // console.log("Ep otp error 1", err.response.data);
-                    return err
+                    console.log("Ep otp error 1", err.response.data);
+                    return err.response
                 });
-            console.log("warning ",resp)
             if (resp.status === 200)
                 return 'success';
             else
                 return 'failed';
         }catch (e) {
-            // console.log('Ep otp error 2', e);
+            console.log('Ep otp error 2', e);
             return 'failed';
         }
     }
