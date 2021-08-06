@@ -219,6 +219,7 @@ class EasypaisaRepository {
     getOrderId() {
         //this.orderId = "GoonjEasypaisa_"+shortId.generate()+"_"+helper.getCurrentDate();
         this.orderId = "GEP_"+shortid.generate();
+        console.log("order id", this.orderId)
         return this.orderId;
     }
 }
