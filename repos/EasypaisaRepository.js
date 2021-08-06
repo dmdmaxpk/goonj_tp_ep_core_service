@@ -75,7 +75,8 @@ class EasypaisaRepository {
             self.getOrderId();
             let data = {
                 'request': {
-                    'orderId': transaction_id,
+                    // 'orderId': transaction_id,
+                    'orderId': self.orderId,
                     'storeId': self.storeId,
                     'transactionAmount': '' + amount,
                     'transactionType': 'MA',
@@ -134,7 +135,8 @@ class EasypaisaRepository {
 
             let data = {
                 'request': {
-                    'orderId': transaction_id,
+                    // 'orderId': transaction_id,
+                    'orderId': self.orderId,
                     'storeId': self.storeId,
                     'transactionAmount': '' + price_point,
                     'transactionType': 'MA',
