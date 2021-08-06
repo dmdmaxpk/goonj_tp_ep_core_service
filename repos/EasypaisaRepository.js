@@ -84,6 +84,7 @@ class EasypaisaRepository {
             else
                 return {'code': config.codes.code_error, 'message': 'Failed sent OTP'};
         }catch (e) {
+            console.log(e)
             return {'code': config.codes.code_error, 'message': e.message};
         }
     }
