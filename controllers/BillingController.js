@@ -18,6 +18,7 @@ exports.updateToken = async (req, res) => {
         // save to database
         let currentToken = await apiTokenRepo.getToken();
         currentToken === undefined ? apiTokenRepo.createToken(token.access_token) : apiTokenRepo.updateToken(token.access_token);
+        config.telenor_dcb_api_token = currentToken;
         res.send({code: config.codes.code_success, message: 'Successfully updated', token: token.access_token});
     }else{
         let previousToken = await apiTokenRepo.getToken();
