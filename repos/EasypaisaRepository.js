@@ -26,38 +26,65 @@ class EasypaisaRepository {
     * Params: mobileAccountNo
     * Return Type: Object
     * */
-    async generateOPT(msisdn){
+    // async generateOPT(msisdn){
+    //     let self = this;
+    //     let data = {
+    //         'request': {
+    //             'storeId': self.storeId,
+    //             'mobileAccountNo': msisdn
+    //         }
+    //     };
+    //     try {
+    //         self.generateSignature(data);
+    //         data.signature = self.signature;
+    //         console.log('Ep otp data', data);
+
+    //         let resp = await axios({
+    //                 method: 'post',
+    //                 url: self.generateotpUrl,
+    //                 data: data,
+    //                 headers: {'Credentials': self.base64_cred, 'Authorization': 'Bearer '+config.telenor_dcb_api_token, 'Content-Type': 'application/json'}
+    //             }).then(response => {
+    //                 console.log('Ep otp response', resp.data);
+    //                 return response;
+    //             }).catch(err => {
+    //                 console.log("Ep otp error 1", err.response.data);
+    //             });
+    //         if (resp.status === 200)
+    //             return 'success';
+    //         else
+    //             return 'failed';
+    //     }catch (e) {
+    //         console.log('Ep otp error 2', e);
+    //         return 'failed';
+    //     }
+    // }
+
+    async generateOPT(mobileAccountNo){
         let self = this;
         let data = {
             'request': {
                 'storeId': self.storeId,
-                'mobileAccountNo': msisdn
+                'mobileAccountNo': mobileAccountNo
             }
         };
         try {
             self.generateSignature(data);
             data.signature = self.signature;
-            console.log('Ep otp data', data);
-
             let resp = await axios({
                     method: 'post',
+                    //url: config.telenor_dcb_api_baseurl + 'eppinless/v1/generate-otp',
                     url: self.generateotpUrl,
                     data: data,
                     headers: {'Credentials': self.base64_cred, 'Authorization': 'Bearer '+config.telenor_dcb_api_token, 'Content-Type': 'application/json'}
-                }).then(response => {
-                    console.log('Ep otp response', resp.data);
-                    return response;
-                }).catch(err => {
-                    console.log("Ep otp error 1", err.response.data);
-                    return err.response
                 });
+            console.log('generateOPT: EP: ', resp.data);
             if (resp.status === 200)
-                return 'success';
+                return {'code': config.codes.code_success, 'message': 'OTP Sent'};
             else
-                return 'failed';
+                return {'code': config.codes.code_error, 'message': 'Failed sent OTP'};
         }catch (e) {
-            console.log('Ep otp error 2', e);
-            return 'failed';
+            return {'code': config.codes.code_error, 'message': e.message};
         }
     }
 
