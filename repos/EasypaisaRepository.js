@@ -42,16 +42,12 @@ class EasypaisaRepository {
             console.log('Ep otp data', data, "token", tp_token);
             
             let resp = await axios({
-                    method: 'post',
-                    url: self.generateotpUrl,
-                    data: data,
-                    headers: {'Credentials': self.base64_cred, 'Authorization': 'Bearer '+tp_token, 'Content-Type': 'application/json'}
-                }).then(response => {
-                    console.log('Ep otp response', resp.data);
-                    return response;
-                }).catch(err => {
-                    console.log("Ep otp error 1", err.response);
-                });
+                method: 'post',
+                //url: config.telenor_dcb_api_baseurl + 'eppinless/v1/generate-otp',
+                url: self.generateotpUrl,
+                data: data,
+                headers: {'Credentials': self.base64_cred, 'Authorization': 'Bearer '+tp_token, 'Content-Type': 'application/json'}
+            });
             if (resp.status === 200)
                 return 'success';
             else
