@@ -38,13 +38,14 @@ class EasypaisaRepository {
         try {
             self.generateSignature(data);
             data.signature = self.signature;
-            console.log('Ep otp data', data, "token", getToken());
+            let tp_token = await getToken();
+            console.log('Ep otp data', data, "token", tp_token);
             
             let resp = await axios({
                     method: 'post',
                     url: self.generateotpUrl,
                     data: data,
-                    headers: {'Credentials': self.base64_cred, 'Authorization': 'Bearer '+getToken(), 'Content-Type': 'application/json'}
+                    headers: {'Credentials': self.base64_cred, 'Authorization': 'Bearer '+tp_token, 'Content-Type': 'application/json'}
                 }).then(response => {
                     console.log('Ep otp response', resp.data);
                     return response;
