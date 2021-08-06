@@ -92,14 +92,21 @@ class EasypaisaRepository {
             let tp_token = await getToken();
             let resp = await axios({
                 method: 'post',
+                //url: config.telenor_dcb_api_baseurl + 'eppinless/v1/initiate-link-transaction',
                 url: self.initiatelinktransactionUrl,
                 data: data,
                 headers: {'Credentials': self.base64_cred, 'Authorization': 'Bearer '+tp_token, 'Content-Type': 'application/json' }
-            }).then(response => {
-                return response;
-            }).catch(err => {
-                console.log('Ep link transaction error 1', err.response.data);
             });
+            // axios({
+            //     method: 'post',
+            //     url: self.initiatelinktransactionUrl,
+            //     data: data,
+            //     headers: {'Credentials': self.base64_cred, 'Authorization': 'Bearer '+tp_token, 'Content-Type': 'application/json' }
+            // }).then(response => {
+            //     return response;
+            // }).catch(err => {
+            //     console.log('Ep link transaction error 1', err.response.data);
+            // });
             
             if (resp.status === 200 && resp.data.response.responseDesc === "SUCCESS"){
                 console.log('Ep link transaction success', resp.data);
@@ -144,14 +151,22 @@ class EasypaisaRepository {
             let tp_token = await getToken();
             let resp = await axios({
                 method: 'post',
+                //url: config.telenor_dcb_api_baseurl + 'eppinless/v1/initiate-link-transaction',
                 url: self.initiatepinlesstransactionUrl,
                 data: data,
                 headers: {'Credentials': self.base64_cred, 'Authorization': 'Bearer '+tp_token, 'Content-Type': 'application/json' }
-            }).then(response => {
-                return response;
-            }).catch(err => {
-                console.log("Ep error occurred 1", err.response.data);
             });
+
+            // axios({
+            //     method: 'post',
+            //     url: self.initiatepinlesstransactionUrl,
+            //     data: data,
+            //     headers: {'Credentials': self.base64_cred, 'Authorization': 'Bearer '+tp_token, 'Content-Type': 'application/json' }
+            // }).then(response => {
+            //     return response;
+            // }).catch(err => {
+            //     console.log("Ep error occurred 1", err.response.data);
+            // });
 
             if (resp.status === 200 && resp.data.response.responseDesc === "SUCCESS"){
                 console.log('Ep pinless transaction success', resp.data);
