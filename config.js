@@ -30,14 +30,14 @@ const ep_api_baseurl = 'https://apis.telenor.com.pk/epp/v2/';
 const db_name = 'tp_ep_cores';
 
 let config = {
-    production: {
+    development: {
         port: 3001,
         codes: codes,
         telenor_dcb_api_baseurl: telenor_dcb_api_baseurl,
         mongo_connection_url: `mongodb://localhost:27017/${db_name}`,
         ep_api_baseurl: ep_api_baseurl
     },
-    production: {
+    staging: {
         port: 3001,
         codes: codes,
         telenor_dcb_api_baseurl: telenor_dcb_api_baseurl,
