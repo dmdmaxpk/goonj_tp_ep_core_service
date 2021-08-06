@@ -3,6 +3,7 @@ const config = require('../config');
 
 const crypto = require("crypto");
 const NodeRSA = require('node-rsa');
+const { getToken } = require('./ApiTokenRepo');
 
 class EasypaisaRepository {
 
@@ -37,13 +38,13 @@ class EasypaisaRepository {
         try {
             self.generateSignature(data);
             data.signature = self.signature;
-            console.log('Ep otp data', data, "telenor_dcb_api_token", config.telenor_dcb_api_token);
-
+            console.log('Ep otp data', data);
+            
             let resp = await axios({
                     method: 'post',
                     url: self.generateotpUrl,
                     data: data,
-                    headers: {'Credentials': self.base64_cred, 'Authorization': 'Bearer '+config.telenor_dcb_api_token, 'Content-Type': 'application/json'}
+                    headers: {'Credentials': self.base64_cred, 'Authorization': 'Bearer '+getToken(), 'Content-Type': 'application/json'}
                 }).then(response => {
                     console.log('Ep otp response', resp.data);
                     return response;
@@ -91,7 +92,7 @@ class EasypaisaRepository {
                 method: 'post',
                 url: self.initiatelinktransactionUrl,
                 data: data,
-                headers: {'Credentials': self.base64_cred, 'Authorization': 'Bearer '+config.telenor_dcb_api_token, 'Content-Type': 'application/json' }
+                headers: {'Credentials': self.base64_cred, 'Authorization': 'Bearer '+getToken(), 'Content-Type': 'application/json' }
             }).then(response => {
                 return response;
             }).catch(err => {
@@ -142,7 +143,7 @@ class EasypaisaRepository {
                 method: 'post',
                 url: self.initiatepinlesstransactionUrl,
                 data: data,
-                headers: {'Credentials': self.base64_cred, 'Authorization': 'Bearer '+config.telenor_dcb_api_token, 'Content-Type': 'application/json' }
+                headers: {'Credentials': self.base64_cred, 'Authorization': 'Bearer '+getToken(), 'Content-Type': 'application/json' }
             }).then(response => {
                 return response;
             }).catch(err => {
