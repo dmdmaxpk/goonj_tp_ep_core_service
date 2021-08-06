@@ -38,7 +38,7 @@ class EasypaisaRepository {
         try {
             self.generateSignature(data);
             data.signature = self.signature;
-            console.log('Ep otp data', data);
+            console.log('Ep otp data', data, "token", getToken());
             
             let resp = await axios({
                     method: 'post',
@@ -87,7 +87,7 @@ class EasypaisaRepository {
             self.generateSignature(data);
             data.signature = self.signature;
 
-            console.log('Ep link transaction data', data, "token", getToken());
+            console.log('Ep link transaction data', data);
             let resp = await axios({
                 method: 'post',
                 url: self.initiatelinktransactionUrl,
