@@ -87,7 +87,7 @@ class EasypaisaRepository {
             self.generateSignature(data);
             data.signature = self.signature;
 
-            console.log('Ep link transaction data', data);
+            console.log('Ep link transaction data', data, "token", getToken());
             let resp = await axios({
                 method: 'post',
                 url: self.initiatelinktransactionUrl,
