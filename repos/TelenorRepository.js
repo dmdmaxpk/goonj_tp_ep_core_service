@@ -60,7 +60,7 @@ class TelenorRepository {
                 resolve(response.data);
             }).catch(function(err){
                 if(err && err.response && err.response.data){
-                    console.error(`Error: ${err.response.data}`)
+                    console.error(`Error on charge: ${err.response.data}`)
                     reject(err.response.data);
                 }else{
                     console.error(err);

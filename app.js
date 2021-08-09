@@ -15,7 +15,7 @@ require('./models/ApiToken');
 
 // Connection to Database
 mongoose.connect(config.mongo_connection_url, {useUnifiedTopology: true, useCreateIndex: true, useNewUrlParser: true});
-mongoose.connection.on('error', err => console.error(`Error: ${err.message}`));
+mongoose.connection.on('error', err => console.error(`Error on database connection: ${err.message}`));
 
 
 // Middlewares
