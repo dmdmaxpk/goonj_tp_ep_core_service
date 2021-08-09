@@ -31,7 +31,7 @@ let { port } = config;
 
 // Update api token right after start and schedule for every 50 mimutes
 var CronJob = require('cron').CronJob;
-var job = new CronJob('* 50 * * * *', async function() {
+var job = new CronJob('*/50 * * * *', async function() {
     console.log('Updating Telenor API Token...')
     await axios({
         method: 'post',
