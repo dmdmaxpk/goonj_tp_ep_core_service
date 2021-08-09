@@ -2,6 +2,7 @@ const express = require('express');
 const logger = require('morgan');
 const bodyParser = require('body-parser');
 const config = require('./config');
+const axios = require('axios');
 const app = express();
 
 
@@ -26,8 +27,25 @@ app.use(mongoSanitize());
 // Import routes
 app.use('/', require('./routes/index'));
 
-// Start Server
 let { port } = config;
+
+// every second local cron to reset TPS values
+var CronJob = require('cron').CronJob;
+var job = new CronJob('* 50 * * * *', async function() {
+    console.log('Updating Telenor API Token...')
+    await axios({
+        method: 'post',
+        url: `http://localhost:${port}/core/update-api-token`,
+        headers: {'Content-Type': 'application/json'}
+    }).then(response => {
+        console.log(response.data);
+    }).catch(err => {
+        console.log("Error updating telenor api token: ", err);
+    });
+}, null, true, 'America/Los_Angeles');
+job.start();
+
+// Start Server
 app.listen(port, () => {
     console.log(`TP/EP Core Service Running On Port ${port}`);
 });
