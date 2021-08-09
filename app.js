@@ -29,7 +29,7 @@ app.use('/', require('./routes/index'));
 
 let { port } = config;
 
-// every second local cron to reset TPS values
+// Update api token right after start and schedule for every 50 mimutes
 var CronJob = require('cron').CronJob;
 var job = new CronJob('* 50 * * * *', async function() {
     console.log('Updating Telenor API Token...')
@@ -42,7 +42,7 @@ var job = new CronJob('* 50 * * * *', async function() {
     }).catch(err => {
         console.log("Error updating telenor api token: ", err);
     });
-}, null, true, 'America/Los_Angeles');
+}, null, true, 'America/Los_Angeles', null, true);
 job.start();
 
 // Start Server
