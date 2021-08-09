@@ -13,6 +13,7 @@ class TelenorRepository {
             }).then(function(response){
                 resolve(response.data);
             }).catch(function(err){
+                console.log(err);
                 reject(err);
             });
         });
@@ -33,6 +34,7 @@ class TelenorRepository {
                 console.log("Sms Response", response.data);
                 resolve(response.data);
             }).catch(function(err){
+                console.log(err);
                 reject(err);
             });
         })
@@ -56,11 +58,11 @@ class TelenorRepository {
                 headers: {'Authorization': 'Bearer '+apiToken, 'Content-Type': 'application/json' },
                 data: form
             }).then(function(response){
-                console.log(`Response: ${response.data}`)
+                console.log(`Response: `, response.data)
                 resolve(response.data);
             }).catch(function(err){
                 if(err && err.response && err.response.data){
-                    console.error(`Error on charge: ${err.response.data}`)
+                    console.error(`Error on charge: `, err.response.data)
                     reject(err.response.data);
                 }else{
                     console.error(err);
@@ -81,6 +83,7 @@ class TelenorRepository {
             }).then(function(response){
                 resolve(response.data);
             }).catch(function(err){
+                console.log(err);
                 reject(err.response.data);
             });
         });
