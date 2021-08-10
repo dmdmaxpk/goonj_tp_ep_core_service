@@ -4,7 +4,6 @@ const config = require('../config');
 const crypto = require("crypto");
 const NodeRSA = require('node-rsa');
 const { getToken } = require('./ApiTokenRepo');
-const Helper = require('../helper/helper');
 
 const shortid = require('shortid');
 
@@ -71,7 +70,6 @@ class EasypaisaRepository {
         
         try {
             let self = this;
-            await self.getKey();
             self.getOrderId();
             let data = {
                 'request': {
@@ -130,7 +128,6 @@ class EasypaisaRepository {
     async initiatePinlessTransaction(msisdn, price_point, transaction_id, ep_token){
         try {
             let self = this, returnObj = {};
-            await self.getKey();
             self.getOrderId();
 
             let data = {
@@ -226,12 +223,6 @@ class EasypaisaRepository {
             return {'code': config.codes.code_error, 'message': err.message, 'method': 'verfiySignature'};
         }
     }
-
-
-    getKey(){
-        this.privateKey = Helper.easypaisaPrivateKey();
-    }
-
 
     getOrderId() {
         //this.orderId = "GoonjEasypaisa_"+shortId.generate()+"_"+helper.getCurrentDate();
