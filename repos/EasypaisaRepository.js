@@ -124,7 +124,7 @@ class EasypaisaRepository {
     * */
     async initiatePinlessTransaction(msisdn, price_point, transaction_id, ep_token){
         try {
-            let self = this, returnObj = {};
+            let self = this;
 
             let data = {
                 'request': {
@@ -145,22 +145,10 @@ class EasypaisaRepository {
             let tp_token = await getToken();
             let resp = await axios({
                 method: 'post',
-                //url: config.telenor_dcb_api_baseurl + 'eppinless/v1/initiate-link-transaction',
                 url: self.initiatepinlesstransactionUrl,
                 data: data,
                 headers: {'Credentials': self.base64_cred, 'Authorization': 'Bearer '+tp_token, 'Content-Type': 'application/json' }
             });
-
-            // axios({
-            //     method: 'post',
-            //     url: self.initiatepinlesstransactionUrl,
-            //     data: data,
-            //     headers: {'Credentials': self.base64_cred, 'Authorization': 'Bearer '+tp_token, 'Content-Type': 'application/json' }
-            // }).then(response => {
-            //     return response;
-            // }).catch(err => {
-            //     console.log("Ep error occurred 1", err.response.data);
-            // });
 
             if (resp.status === 200 && resp.data.response.responseDesc === "SUCCESS"){
                 console.log('Ep pinless transaction success', resp.data);
@@ -171,7 +159,7 @@ class EasypaisaRepository {
             }
         } catch(err){
             console.log('Ep error occurred 2', err);
-            throw err;
+            throw err.message;
         }
     }
 
