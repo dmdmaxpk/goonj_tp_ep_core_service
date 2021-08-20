@@ -50,7 +50,7 @@ class TelenorRepository {
             "ProductID": "GoonjDCB-Charge"
         }
         
-        console.log(`Form Data: ${form}`)
+        console.log(`Form Data: `, form);
         return new Promise(function(resolve, reject) {
             axios({
                 method: 'post',
@@ -59,6 +59,7 @@ class TelenorRepository {
                 data: form
             }).then(function(response){
                 console.log(`Response: `, response.data)
+                console.log('-----------------------------------------------');
                 resolve(response.data);
             }).catch(function(err){
                 if(err && err.response && err.response.data){

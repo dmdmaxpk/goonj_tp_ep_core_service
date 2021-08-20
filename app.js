@@ -1,5 +1,4 @@
 const express = require('express');
-const logger = require('morgan');
 const bodyParser = require('body-parser');
 const config = require('./config');
 const axios = require('axios');
@@ -19,7 +18,6 @@ mongoose.connection.on('error', err => console.error(`Error on database connecti
 
 
 // Middlewares
-app.use(logger('dev'));
 app.use(bodyParser.json({limit: '5120kb'}));  //5MB
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(mongoSanitize());
