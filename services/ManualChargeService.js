@@ -18,7 +18,7 @@ class ManualChargeService {
                     if(!msisdn.startsWith('0')) msisdn = '0' + msisdn;
 
                     reqBody.msisdn = msisdn;
-                    reqBody.amount = Number(amount);
+                    reqBody.amount = amount;
                     reqBody.transaction_id = msisdn + '_' + Math.random().toString(10).substr(2, 6);
                     reqBody.partner_id = 'TP-GoonjDailySub';
                     reqBody.payment_source = 'telenor';
