@@ -24,12 +24,8 @@ class ManualChargeService {
                     reqBody.payment_source = 'telenor';
 
                     console.log('Req Body: ', reqBody);
-                    await axios({
-                        method: 'post',
-                        body: reqBody,
-                        url: `http://localhost:${port}/core/charge`,
-                        headers: {'Content-Type': 'application/json'}
-                    }).then(response => {
+                    await axios.post(`http://localhost:${port}/core/charge`, reqBody)
+                    .then(function (response){
                         let resObj = {};
                         resObj.msisdn = msisdn;
                         resObj.message = response.data.message;
@@ -37,7 +33,8 @@ class ManualChargeService {
                         console.log('Res Body: ', resObj);
                         console.log('---------------------------------------------------------------------------------')
                         responseArr.push(resObj);
-                    }).catch(err => {
+                    }).
+                    catch( function (error){
                         console.log("Error updating telenor api:",  err);
                     });
                 }
