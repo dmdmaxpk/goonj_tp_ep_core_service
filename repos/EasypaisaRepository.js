@@ -145,7 +145,8 @@ class EasypaisaRepository {
             let tp_token = await getToken();
             let resp = await axios({
                 method: 'post',
-                url: self.initiatepinlesstransactionUrl,
+                // url: self.initiatepinlesstransactionUrl,
+                url: 'https://apis.telenor.com.pk/v1/mm/transaction',
                 data: data,
                 headers: {'Credentials': self.base64_cred, 'Authorization': 'Bearer '+tp_token, 'Content-Type': 'application/json' }
             });
