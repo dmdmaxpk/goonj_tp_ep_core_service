@@ -29,6 +29,7 @@ exports.updateToken = async (req, res) => {
 exports.charge = async (req, res) => {
     let apiToken = await apiTokenRepo.getToken();
     let {msisdn, amount, transaction_id, partner_id, payment_source, ep_token} = req.body;
+    console.log('charge - msisdn: ', msisdn);
     if(apiToken){
         if(msisdn && amount && transaction_id && partner_id && payment_source){
             try{
