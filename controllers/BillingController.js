@@ -44,7 +44,7 @@ exports.charge = async (req, res) => {
                         if(response && response.response && response.response.responseDesc && response.response.responseDesc === 'SUCCESS'){
                             res.send({code: config.codes.code_success, response_time: timeTakeByChargeApi(endTime), message: 'success', full_api_response: response});
                         }else{
-                            res.send({code: config.codes.code_billing_failed, message: 'failed', full_api_response: response});
+                            res.send({code: config.codes.code_billing_failed, response_time: timeTakeByChargeApi(endTime), message: 'failed', full_api_response: response});
                         }
                     }
                 }else {
@@ -55,7 +55,7 @@ exports.charge = async (req, res) => {
                     if(response.Message === "Success"){
                         res.send({code: config.codes.code_success, response_time: timeTakeByChargeApi(endTime),  message: 'success', full_api_response: response});
                     }else{
-                        res.send({code: config.codes.code_billing_failed, message: 'failed', full_api_response: response});
+                        res.send({code: config.codes.code_billing_failed, response_time: timeTakeByChargeApi(endTime), message: 'failed', full_api_response: response});
                     }
                 }
             }catch(e){
