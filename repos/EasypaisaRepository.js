@@ -54,7 +54,7 @@ class EasypaisaRepository {
             else
                 return 'failed';
         }catch (e) {
-            console.log('Ep otp error 2', e);
+            console.log('Ep otp error', e.message);
             return 'failed';
         }
     }
@@ -100,7 +100,7 @@ class EasypaisaRepository {
                 return resp.data;
             }
         } catch(err){
-            console.log('Ep link transaction error: ', err);
+            console.log('Ep initiateLinkTransaction error: ', err.message);
             throw err;
         }
     }
@@ -146,8 +146,8 @@ class EasypaisaRepository {
                 return resp.data;
             }
         } catch(err){
-            console.log('Ep error occurred 2', err);
-            throw err.message;
+            console.log('Ep initiatePinlessTransaction error occurred', err.message);
+            throw err;
         }
     }
 
