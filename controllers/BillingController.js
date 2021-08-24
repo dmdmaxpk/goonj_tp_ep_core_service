@@ -53,7 +53,7 @@ exports.charge = async (req, res) => {
                             if(response && response.response && response.response.responseDesc && response.response.responseDesc === 'SUCCESS'){
                                 res.send({code: config.codes.code_success, response_time: timeTakeByChargeApi(endTime), message: 'success', full_api_response: response});
                             }else{
-                                res.send({code: config.codes.code_billing_failed, response_time: timeTakeByChargeApi(endTime), message: 'failed', full_api_response: response});
+                                res.send({code: config.codes.code_billing_failed, response_time: timeTakeByChargeApi(endTime), message: 'failed', desc: response.response.responseDesc, full_api_response: response});
                             }
                         }else{
                             res.send({code: config.codes.code_billing_failed, message: 'Please provide valid OTP'});
