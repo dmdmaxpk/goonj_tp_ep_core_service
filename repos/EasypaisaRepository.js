@@ -45,7 +45,6 @@ class EasypaisaRepository {
             
             let resp = await axios({
                 method: 'post',
-                //url: config.telenor_dcb_api_baseurl + 'eppinless/v1/generate-otp',
                 url: self.generateotpUrl,
                 data: data,
                 headers: {'Credentials': self.base64_cred, 'Authorization': 'Bearer '+tp_token, 'Content-Type': 'application/json'}
@@ -55,7 +54,7 @@ class EasypaisaRepository {
             else
                 return 'failed';
         }catch (e) {
-            console.log('Ep otp error 2', e);
+            console.log('Ep otp error', e.message);
             return 'failed';
         }
     }
@@ -65,7 +64,7 @@ class EasypaisaRepository {
    * Params: mobileAccountNo, transactionAmount, OTP
    * Return Type: Object
    * */
-    async initiateLinkTransaction(msisdn, amount, transaction_id, otp,){
+    async initiateLinkTransaction(msisdn, amount, transaction_id, otp){
         
         try {
             let self = this;
@@ -88,21 +87,10 @@ class EasypaisaRepository {
             let tp_token = await getToken();
             let resp = await axios({
                 method: 'post',
-                //url: config.telenor_dcb_api_baseurl + 'eppinless/v1/initiate-link-transaction',
                 url: self.initiatelinktransactionUrl,
                 data: data,
                 headers: {'Credentials': self.base64_cred, 'Authorization': 'Bearer '+tp_token, 'Content-Type': 'application/json' }
             });
-            // axios({
-            //     method: 'post',
-            //     url: self.initiatelinktransactionUrl,
-            //     data: data,
-            //     headers: {'Credentials': self.base64_cred, 'Authorization': 'Bearer '+tp_token, 'Content-Type': 'application/json' }
-            // }).then(response => {
-            //     return response;
-            // }).catch(err => {
-            //     console.log('Ep link transaction error 1', err.response.data);
-            // });
             
             if (resp.status === 200 && resp.data.response.responseDesc === "SUCCESS"){
                 console.log('Ep link transaction success', resp.data);
@@ -112,7 +100,7 @@ class EasypaisaRepository {
                 return resp.data;
             }
         } catch(err){
-            console.log('Ep link transaction error 2', err);
+            console.log('Ep initiateLinkTransaction error: ', err.message);
             throw err;
         }
     }
@@ -151,15 +139,15 @@ class EasypaisaRepository {
             });
 
             if (resp.status === 200 && resp.data.response.responseDesc === "SUCCESS"){
-                console.log('Ep pinless transaction success', resp.data);
+                console.log('Ep pinless transaction success:', resp.data);
                 return resp.data;
             }else {
                 console.log('Ep pinless transaction failed', resp.data);
                 return resp.data;
             }
         } catch(err){
-            console.log('Ep error occurred 2', err);
-            throw err.message;
+            console.log('Ep initiatePinlessTransaction error occurred', err.message);
+            throw err;
         }
     }
 

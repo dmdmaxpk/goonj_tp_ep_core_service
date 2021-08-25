@@ -28,27 +28,50 @@ exports.updateToken = async (req, res) => {
 
 exports.charge = async (req, res) => {
     let apiToken = await apiTokenRepo.getToken();
-    let {msisdn, amount, transaction_id, partner_id, payment_source, ep_token} = req.body;
+    let {msisdn, amount, transaction_id, partner_id, payment_source, ep_token, otp} = req.body;
+    console.log('charge - msisdn: ', msisdn);
     if(apiToken){
         if(msisdn && amount && transaction_id && partner_id && payment_source){
             try{
                 if(payment_source === 'easypaisa'){
-                    if(!ep_token){
-                        res.send({code: config.codes.code_error, message: 'Easypaisa token missing'});
-                    }else{
+                    if(ep_token){
+                        let startTime = new Date();
                         let response = await epRepo.initiatePinlessTransaction(msisdn, amount, transaction_id, ep_token);
+                        let endTime = new Date() - startTime;
+
                         if(response && response.response && response.response.responseDesc && response.response.responseDesc === 'SUCCESS'){
-                            res.send({code: config.codes.code_success, message: 'success', full_api_response: response});
+                            res.send({code: config.codes.code_success, response_time: timeTakeByChargeApi(endTime), message: 'success', full_api_response: response});
                         }else{
-                            res.send({code: config.codes.code_billing_failed, message: 'failed', full_api_response: response});
+                            res.send({code: config.codes.code_billing_failed, response_time: timeTakeByChargeApi(endTime), message: 'failed', full_api_response: response});
+                        }
+                    }else{
+                        if(otp){
+                            let startTime = new Date();
+                            let response = await epRepo.initiateLinkTransaction(msisdn, amount, transaction_id, otp);
+                            let endTime = new Date() - startTime;
+    
+                            if(response && response.response && response.response.responseDesc){
+                                if(response.response.responseDesc === 'SUCCESS'){
+                                    res.send({code: config.codes.code_success, response_time: timeTakeByChargeApi(endTime), message: 'success', full_api_response: response});
+                                }else{
+                                    res.send({code: config.codes.code_billing_failed, response_time: timeTakeByChargeApi(endTime), message: 'failed', desc: response.response.responseDesc, full_api_response: response});
+                                }
+                            }else{
+                                res.send({code: config.codes.code_billing_failed, response_time: timeTakeByChargeApi(endTime), message: 'failed', full_api_response: response});
+                            }
+                        }else{
+                            res.send({code: config.codes.code_billing_failed, message: 'Please provide valid OTP'});
                         }
                     }
                 }else {
+                    let startTime = new Date();
                     let response = await tpRepo.charge(msisdn, amount, transaction_id, partner_id, apiToken);
+                    let endTime = new Date() - startTime;
+
                     if(response.Message === "Success"){
-                        res.send({code: config.codes.code_success, message: 'success', full_api_response: response});
+                        res.send({code: config.codes.code_success, response_time: timeTakeByChargeApi(endTime),  message: 'success', full_api_response: response});
                     }else{
-                        res.send({code: config.codes.code_billing_failed, message: 'failed', full_api_response: response});
+                        res.send({code: config.codes.code_billing_failed, response_time: timeTakeByChargeApi(endTime), message: 'failed', full_api_response: response});
                     }
                 }
             }catch(e){
@@ -60,6 +83,17 @@ exports.charge = async (req, res) => {
     }else{
         res.send({code: config.codes.code_error, message: 'api token missing.'});
     }
+}
+
+timeTakeByChargeApi = (take_time) => {
+    take_time = take_time.toString();
+    let len = take_time.length;
+    if (len > 2){
+        take_time = take_time.substring(0, take_time.length - 2);
+        take_time = take_time+'00';
+    }
+
+    return take_time;
 }
 
 exports.sendMessage = async (req, res) => {
