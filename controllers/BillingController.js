@@ -139,14 +139,14 @@ exports.subscriberQuery = async (req, res) => {
             let response = await tpRepo.subscriberQuery(msisdn, apiToken);
             console.log(response);
             if (response.Message === "Success" && response.AssetStatus === "Active") {
-                res.send({code: config.codes.code_success, operator: 'tp', full_api_response: response});
+                res.send({code: config.codes.code_success, operator: 'telenor', full_api_response: response});
             }else{
-                res.send({code: config.codes.code_success, operator: 'ntp', full_api_response: response});
+                res.send({code: config.codes.code_success, operator: 'non_telenor', full_api_response: response});
             }
         }catch(e){
-            res.send({code: config.codes.code_success, operator: 'ntp', full_api_response: e});
+            res.send({code: config.codes.code_success, operator: 'non_telenor', full_api_response: e});
         }
     }else{
-        res.send({code: config.codes.code_error, message: 'Critical parameters are missing.'});
+        res.send({code: config.codes.code_error, message: 'critical parameters are missing.'});
     }
 }
