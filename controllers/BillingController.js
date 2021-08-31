@@ -99,6 +99,7 @@ timeTakeByChargeApi = (take_time) => {
 exports.sendMessage = async (req, res) => {
     let apiToken = await apiTokenRepo.getToken();
     let {msisdn, message} = req.body;
+    console.log('### sendMessage body', req.body);
     if(apiToken){
         if(msisdn && message){
             tpRepo.sendMessage(msisdn, message, apiToken)
