@@ -99,11 +99,15 @@ timeTakeByChargeApi = (take_time) => {
 exports.sendMessage = async (req, res) => {
     let apiToken = await apiTokenRepo.getToken();
     let {msisdn, message} = req.body;
-    if(msisdn && message && apiToken){
-        tpRepo.sendMessage(msisdn, message, apiToken)
-        res.send({code: config.codes.code_success, message: 'Message sent'});
+    if(apiToken){
+        if(msisdn && message){
+            tpRepo.sendMessage(msisdn, message, apiToken)
+            res.send({code: config.codes.code_success, message: 'Message sent'});
+        }else{
+            res.send({code: config.codes.code_error, message: 'Critical parameters are missing.'});
+        }
     }else{
-        res.send({code: config.codes.code_error, message: 'Critical parameters are missing.'});
+        res.send({code: config.codes.code_error, message: 'Auth token missing'});
     }
 }
 
