@@ -102,8 +102,8 @@ exports.sendMessage = async (req, res) => {
     console.log('### sendMessage body', req.body);
     if(apiToken){
         if(msisdn && message){
-            let res = await tpRepo.sendMessage(msisdn, message, apiToken)
-            res.send({code: config.codes.code_success, message: 'Message sent', operator_response: res});
+            let response = await tpRepo.sendMessage(msisdn, message, apiToken)
+            res.send({code: config.codes.code_success, message: 'Message sent', operator_response: response});
         }else{
             res.send({code: config.codes.code_error, message: 'Critical parameters are missing.'});
         }
