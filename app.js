@@ -1,5 +1,3 @@
-process.env.UV_THREADPOOL_SIZE = 8;
-
 const express = require('express');
 const logger = require('morgan');
 const bodyParser = require('body-parser');
