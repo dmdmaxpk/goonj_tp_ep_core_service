@@ -55,7 +55,7 @@ class TelenorRepository {
         return new Promise(function(resolve, reject) {
             axios({
                 httpsAgent: new https.Agent({keepAlive: true}),
-                timeout: 90000,
+                timeout: 1200000,
                 method: 'post',
                 url: config.telenor_dcb_api_baseurl + 'payment/v1/charge',
                 headers: {'Authorization': 'Bearer '+apiToken, 'Content-Type': 'application/json' },
