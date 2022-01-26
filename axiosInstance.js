@@ -11,7 +11,7 @@ const fetchClient = () => {
         headers: {
         'Content-Type': 'application/json',
         },
-        timeout: 60000, //optional
+        timeout: 90000, //optional
         httpsAgent: new https.Agent({ keepAlive: true })
     };
     
