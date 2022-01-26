@@ -1,6 +1,7 @@
 const axios = require('axios');
 const config = require('../config');
 const https = require('https');
+const axiosInstance = require('../axiosInstance');
 
 class TelenorRepository {
 
@@ -53,13 +54,28 @@ class TelenorRepository {
         
         console.log(`Form Data: `, form);
         return new Promise(function(resolve, reject) {
-            axios({
-                httpsAgent: new https.Agent({keepAlive: true, keepAliveMsecs: 30000}),
-                method: 'post',
-                url: config.telenor_dcb_api_baseurl + 'payment/v1/charge',
-                headers: {'Authorization': 'Bearer '+apiToken, 'Content-Type': 'application/json' },
-                data: form
-            }, {timeout: 60000}).then(function(response){
+            // axios({
+            //     httpsAgent: new https.Agent({keepAlive: true, keepAliveMsecs: 30000}),
+            //     method: 'post',
+            //     url: config.telenor_dcb_api_baseurl + 'payment/v1/charge',
+            //     headers: {'Authorization': 'Bearer '+apiToken, 'Content-Type': 'application/json' },
+            //     data: form
+            // }, {timeout: 60000}).then(function(response){
+            //     console.log(`Response: `, response.data)
+            //     console.log('-----------------------------------------------');
+            //     resolve(response.data);
+            // }).catch(function(err){
+            //     if(err && err.response && err.response.data){
+            //         console.error(`Error on charge: `, err.response.data)
+            //         resolve(err.response.data);
+            //     }else{
+            //         console.error(err);
+            //         reject({error_message: err.message});
+            //     }
+            // });
+
+            axiosInstance.post('payment/v1/charge', form, {headers: {'Authorization': 'Bearer '+apiToken, 'Content-Type': 'application/json' }})
+            .then(function(response){
                 console.log(`Response: `, response.data)
                 console.log('-----------------------------------------------');
                 resolve(response.data);
