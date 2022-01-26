@@ -1,7 +1,5 @@
 const axios = require('axios');
 const config = require('../config');
-const https = require('https');
-const axiosInstance = require('../axiosInstance');
 
 class TelenorRepository {
 
@@ -74,7 +72,7 @@ class TelenorRepository {
             //     }
             // });
 
-            axiosInstance.post('payment/v1/charge', form, {headers: {'Authorization': 'Bearer '+apiToken, 'Content-Type': 'application/json' }})
+            fetchClient().post('/payment/v1/charge', form, {headers: {'Authorization': 'Bearer '+apiToken, 'Content-Type': 'application/json' }})
             .then(function(response){
                 console.log(`Response: `, response.data)
                 console.log('-----------------------------------------------');
