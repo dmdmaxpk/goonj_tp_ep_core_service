@@ -1,5 +1,6 @@
 const axios = require('axios');
 const config = require('../config');
+const {fetchClient} = require('../axiosInstance');
 
 class TelenorRepository {
 
