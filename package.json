@@ -12,6 +12,7 @@
 		"debug": "~2.6.9",
 		"express": "^4.17.1",
 		"express-mongo-sanitize": "^2.1.0",
+		"https": "^1.0.0",
 		"mongoose": "^5.11.0",
 		"mongoose-shortid-nodeps": "^0.6.5",
 		"morgan": "^1.10.0",
