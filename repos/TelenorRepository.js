@@ -31,7 +31,7 @@ class TelenorRepository {
                 url: config.telenor_dcb_api_baseurl + 'sms/v1/send',
                 headers: {'Authorization': 'Bearer '+apiToken, 'Content-Type': 'application/json' },
                 data: form
-            }).then(function(response){
+            }, {timeout: 60000}).then(function(response){
                 console.log("Sms Response", response.data);
                 resolve(response.data);
             }).catch(function(err){
@@ -60,7 +60,7 @@ class TelenorRepository {
                 url: config.telenor_dcb_api_baseurl + 'payment/v1/charge',
                 headers: {'Authorization': 'Bearer '+apiToken, 'Content-Type': 'application/json' },
                 data: form
-            }).then(function(response){
+            }, {timeout: 60000}).then(function(response){
                 console.log(`Response: `, response.data)
                 console.log('-----------------------------------------------');
                 resolve(response.data);
