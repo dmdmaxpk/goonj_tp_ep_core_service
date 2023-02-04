@@ -9,6 +9,8 @@ router.route('/api-token').get(controller.getToken);
 router.route('/subscriber-query').get(controller.subscriberQuery);
 router.route('/update-api-token').post(controller.updateToken);
 router.route('/charge').post(controller.charge);
+router.route('/subscribe').post(controller.subscribe);
+router.route('/unsubscribe').post(controller.unsubscribe);
 router.route('/send-sms').post(controller.sendMessage);
 router.route('/send-ep-otp').post(controller.sendEpOtp);
 router.route('/init-link-transaction').post(controller.epLinkTransaction);

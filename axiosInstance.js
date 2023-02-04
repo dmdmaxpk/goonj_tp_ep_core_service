@@ -1,9 +1,6 @@
 const axios = require('axios')
 const https = require('https')
 const config = require('./config')
-// const domain = config.telenor_dcb_api_baseurl;
-// const domain = 'http://localhost:3001';
-// let instance
 
 const fetchClient = () => {
     const defaultOptions = {

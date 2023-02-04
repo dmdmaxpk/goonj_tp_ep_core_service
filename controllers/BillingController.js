@@ -26,6 +26,36 @@ exports.updateToken = async (req, res) => {
     }
 }
 
+exports.subscribe = async (req, res) => {
+    let apiToken = await apiTokenRepo.getToken();
+    let {msisdn, serviceId} = req.body;
+    console.log('charge - msisdn: ', msisdn);
+    if(apiToken && msisdn && serviceId){
+        let startTime = new Date();
+        let response = await tpRepo.subscribe(msisdn, serviceId, apiToken);
+        let endTime = new Date() - startTime;
+
+        res.send({code: config.codes.code_success, response_time: timeTakeByChargeApi(endTime), response});
+    }else{
+        res.send({code: config.codes.code_error, message: 'Api token/critical parameters are missing.'});
+    }
+}
+
+exports.unsubscribe = async (req, res) => {
+    let apiToken = await apiTokenRepo.getToken();
+    let {msisdn, serviceId} = req.body;
+    console.log('charge - msisdn: ', msisdn);
+    if(apiToken && msisdn && serviceId){
+        let startTime = new Date();
+        let response = await tpRepo.unsubscribe(msisdn, serviceId, apiToken);
+        let endTime = new Date() - startTime;
+
+        res.send({code: config.codes.code_success, response_time: timeTakeByChargeApi(endTime), response});
+    }else{
+        res.send({code: config.codes.code_error, message: 'Api token/critical parameters are missing.'});
+    }
+}
+
 exports.charge = async (req, res) => {
     let apiToken = await apiTokenRepo.getToken();
     let {msisdn, amount, transaction_id, partner_id, payment_source, ep_token, otp} = req.body;
