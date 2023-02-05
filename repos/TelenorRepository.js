@@ -125,15 +125,15 @@ class TelenorRepository {
             "channel":"API"
         }
         
-        console.log(`Form Data - Charge V2: `, JSON.stringify(form));
+        console.log(`Form Data - Unsub V2: `, JSON.stringify(form));
         return new Promise(function(resolve, reject) {
-            fetchClient().post('/dpdp/v1/subscriber', form, {headers: {'Authorization': 'Bearer '+apiToken, 'Content-Type': 'application/json' }})
+            fetchClient().delete('/dpdp/v1/subscriber', form, {headers: {'Authorization': 'Bearer '+apiToken, 'Content-Type': 'application/json' }})
             .then(function(response){
-                console.log(`Response - V2: `, response.data)
+                console.log(`Response - Unsub - V2: `, response.data)
                 resolve(JSON.stringify(response.data));
             }).catch(function(err){
                 if(err && err.response && err.response.data){
-                    console.error(`Error on charge - V2: `, err.response.data)
+                    console.error(`Error on unsub - V2: `, err.response.data)
                     resolve(err.response.data);
                 }else{
                     console.error(err);
