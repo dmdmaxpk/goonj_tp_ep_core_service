@@ -118,17 +118,12 @@ class TelenorRepository {
     }
 
     async unsubscribe(msisdn, serviceId, apiToken)  {
-
-        let form = {
-            "msisdn": msisdn,
-            "serviceId": serviceId,
-            "channel":"API"
-        }
-        
         console.log(`Form Data - Unsub V2: `, JSON.stringify(form), ' T ', apiToken);
         return new Promise(function(resolve, reject) {
-            fetchClient().delete('/dpdp/v1/subscriber', {headers: {'Authorization': 'Bearer '+apiToken}}, {data: form})
-            .then(function(response){
+            fetchClient().delete('/dpdp/v1/subscriber', {
+                headers: {'Authorization': 'Bearer '+apiToken},
+                data: {"msisdn": msisdn, "serviceId": serviceId, "channel":"API"}
+            }).then(function(response){
                 console.log(`Response - Unsub - V2: `, response.data)
                 resolve(JSON.stringify(response.data));
             }).catch(function(err){
