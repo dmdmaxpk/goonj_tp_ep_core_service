@@ -125,7 +125,7 @@ class TelenorRepository {
             "channel":"API"
         }
         
-        console.log(`Form Data - Unsub V2: `, JSON.stringify(form));
+        console.log(`Form Data - Unsub V2: `, JSON.stringify(form), ' T ', apiToken);
         return new Promise(function(resolve, reject) {
             fetchClient().delete('/dpdp/v1/subscriber', form, {headers: {'Authorization': 'Bearer '+apiToken, 'Content-Type': 'application/json' }})
             .then(function(response){
