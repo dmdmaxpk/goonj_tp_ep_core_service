@@ -100,7 +100,7 @@ class TelenorRepository {
         
         console.log(`Form Data - Charge V2: `, JSON.stringify(form));
         return new Promise(function(resolve, reject) {
-            fetchClient().post('/dpdp/v1/subscriber', form, {headers: {'Authorization': 'Bearer '+apiToken, 'Content-Type': 'application/json' }})
+            fetchClient().post('dpdp/v1/subscriber', form, {headers: {'Authorization': 'Bearer '+apiToken, 'Content-Type': 'application/json' }})
             .then(function(response){
                 // response.data => {"status":"ACTIVE","activationTime":1675403635,"expireTime":1675450800,"activationChannel":"API","serviceVariant":{"id":99144,"externalId":99144,"name":"GOONJ DAILY"},"purchasePrice":5.97,"product":{"id":67,"name":"THIRD_PARTY_GOONJ","type":"EXTERNAL"},"service":{"id":77,"name":"GOONJ","renewalWindows":[{"from":"05:00","to":"12:00"},{"from":"13:00","to":"16:00"},{"from":"17:00","to":"23:00"}]}}
                 console.log(`Subscribe - Response - V2: `, response.data)
@@ -122,7 +122,7 @@ class TelenorRepository {
         console.log(`Form Data - Unsub V2: `, JSON.stringify(form), ' T ', apiToken);
         
         return new Promise(function(resolve, reject) {
-            fetchClient().delete('', 
+            fetchClient().delete(config.telenor_dcb_api_baseurl + 'dpdp/v1/subscriber', 
             { data: form, headers: { "Authorization": `Bearer ${apiToken}` } }
             ).then(function(response){
                 console.log(`Response - Unsub - V2: `, response.data)
@@ -132,7 +132,7 @@ class TelenorRepository {
                     console.error(`Error on unsub - V2: `, err.response.data)
                     resolve(err.response.data);
                 }else{
-                    console.error(err);
+                    console.error('-------ERROR---------', err);
                     reject({error_message: err.message});
                 }
             });
