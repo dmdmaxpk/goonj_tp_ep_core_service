@@ -120,30 +120,23 @@ class TelenorRepository {
     async unsubscribe(msisdn, serviceId, apiToken)  {
         let form = {"msisdn": msisdn, "serviceId": serviceId, "channel": "API"};
         console.log(`Form Data - Unsub V2: `, JSON.stringify(form), ' T ', apiToken);
-        let response = await axios.delete(`${config.telenor_dcb_api_baseurl}dpdp/v1/subscriber`, {
-            headers: {Authorization: `Bearer ${apiToken}`},
-            data: form
+        
+        return new Promise(function(resolve, reject) {
+            fetchClient().delete('', 
+            { data: form, headers: { "Authorization": `Bearer ${apiToken}` } }
+            ).then(function(response){
+                console.log(`Response - Unsub - V2: `, response.data)
+                resolve(JSON.stringify(response.data));
+            }).catch(function(err){
+                if(err && err.response && err.response.data){
+                    console.error(`Error on unsub - V2: `, err.response.data)
+                    resolve(err.response.data);
+                }else{
+                    console.error(err);
+                    reject({error_message: err.message});
+                }
+            });
         });
-
-        console.log(`Response - Unsub - V2: `, response.data)
-        resolve(JSON.stringify(response.data));
-
-        // return new Promise(function(resolve, reject) {
-        //     fetchClient().delete('', 
-        //     { data: , headers: { "Authorization":  } }
-        //     ).then(function(response){
-        //         console.log(`Response - Unsub - V2: `, response.data)
-        //         resolve(JSON.stringify(response.data));
-        //     }).catch(function(err){
-        //         if(err && err.response && err.response.data){
-        //             console.error(`Error on unsub - V2: `, err.response.data)
-        //             resolve(err.response.data);
-        //         }else{
-        //             console.error(err);
-        //             reject({error_message: err.message});
-        //         }
-        //     });
-        // });
     }
     
     
