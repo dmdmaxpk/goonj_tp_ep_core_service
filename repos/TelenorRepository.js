@@ -120,11 +120,11 @@ class TelenorRepository {
     async unsubscribe(msisdn, serviceId, apiToken)  {
         let form = {"msisdn": msisdn, "serviceId": serviceId, "channel": "API"};
         console.log(`Form Data - Unsub V2: `, JSON.stringify(form), ' T ', apiToken);
-        let response = await axios.delete(`${config.telenor_dcb_api_baseurl}/dpdp/v1/subscriber`, {
+        let response = await axios.delete(`${config.telenor_dcb_api_baseurl}dpdp/v1/subscriber`, {
             headers: {Authorization: `Bearer ${apiToken}`},
             data: form
         });
-        
+
         console.log(`Response - Unsub - V2: `, response.data)
         resolve(JSON.stringify(response.data));
 
