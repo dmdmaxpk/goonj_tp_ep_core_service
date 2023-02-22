@@ -126,7 +126,7 @@ class TelenorRepository {
             { data: form, headers: { "Authorization": `Bearer ${apiToken}` } }
             ).then(function(response){
                 console.log(`Response - Unsub - V2: `, response.data)
-                resolve(JSON.stringify(response.data));
+                resolve(response.data);
             }).catch(function(err){
                 if(err && err.response && err.response.data){
                     console.error(`Error on unsub - V2: `, err.response.data)
