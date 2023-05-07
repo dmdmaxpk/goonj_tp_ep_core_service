@@ -129,8 +129,24 @@ class TelenorRepository {
         return new Promise(function(resolve, reject) {
             axios.post('https://apis.telenor.com.pk/cms/v1/token', form, {headers: {'Authorization': 'Bearer '+apiToken, 'Content-Type': 'application/json' }})
             .then(function(response){
-                console.log(`CMS Token - Response: `, response.data)
-                resolve(response.data);
+                console.log(`CMS Token - Response: `, response.data);
+
+                new Promise(function(resolve, reject) {
+                    axios.get(`https://apis.telenor.com.pk/cms/v1/redirect?token=${response.data.token}`)
+                    .then(function(redirectResponse) {
+                        console.log('Redirect API- Response:', redirectResponse);
+                        resolve(response.data);
+                    }).catch(function(error) {
+                        if(error && error.response && error.response.data){
+                            console.error(`Redirect API - Error: `, error.response.data)
+                            resolve(response.data);
+                        }else{
+                            console.error(error);
+                            resolve(response.data);
+                        }
+                        
+                    });
+                });
             }).catch(function(err){
                 if(err && err.response && err.response.data){
                     console.error(`CMS Token - Error: `, err.response.data)
