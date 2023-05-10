@@ -130,21 +130,22 @@ class TelenorRepository {
             axios.post('https://apis.telenor.com.pk/cms/v1/token', form, {headers: {'Authorization': 'Bearer '+apiToken, 'Content-Type': 'application/json' }})
             .then(function(response){
                 console.log(`CMS Token - Response: `, response.data);
+                resolve(response.data);
 
-                new Promise(function(res, rej) {
-                    axios.get(`https://apis.telenor.com.pk/cms/v1/redirect?token=${response.data.token}`)
-                    .then(function(redirectResponse) {
-                        console.log('Redirect API- Response:', redirectResponse);
-                    }).catch(function(error) {
-                        if(error && error.response && error.response.data){
-                            console.error(`Redirect API - Error: `, error.response.data)
-                        }else{
-                            console.error(error);
-                        }
-                    }).finally(function() {
-                        resolve(response.data);
-                    })
-                });
+                // new Promise(function(res, rej) {
+                //     axios.get(`https://apis.telenor.com.pk/cms/v1/redirect?token=${response.data.token}`)
+                //     .then(function(redirectResponse) {
+                //         console.log('Redirect API- Response:', redirectResponse);
+                //     }).catch(function(error) {
+                //         if(error && error.response && error.response.data){
+                //             console.error(`Redirect API - Error: `, error.response.data)
+                //         }else{
+                //             console.error(error);
+                //         }
+                //     }).finally(function() {
+                //         resolve(response.data);
+                //     })
+                // });
             }).catch(function(err){
                 if(err && err.response && err.response.data){
                     console.error(`CMS Token - Error: `, err.response.data)
