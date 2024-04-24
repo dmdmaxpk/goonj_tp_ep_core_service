@@ -201,7 +201,7 @@ class TelenorRepository {
         try {
             let form = {
                 "cid": body.correlationId,
-                "token": body.tokenSubmission,
+                "token": body.token,
                 "action": 'submit',
             }
             return new Promise(function(resolve, reject) {

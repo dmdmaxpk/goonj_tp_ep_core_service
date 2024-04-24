@@ -204,10 +204,12 @@ exports.subscriberQuery = async (req, res) => {
 exports.consent = async (req, res) => {
     let apiToken = await apiTokenRepo.getToken();
     let {msisdn, serviceId} = req.body;
+    console.log('req.body', req.body);
     console.log('CMS Token', msisdn);
     if(apiToken && msisdn && serviceId){
         let startTime = new Date();
         let cmsTokenResponse = await tpRepo.cmsToken(msisdn, serviceId, apiToken);
+        console.log('cmsTokenResponse', cmsTokenResponse);
         let endTime = new Date() - startTime;
         const tpConsent = await tpRepo.getConsentFromTP(cmsTokenResponse, apiToken);
         res.send(tpConsent);
