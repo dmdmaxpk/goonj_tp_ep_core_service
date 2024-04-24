@@ -197,15 +197,18 @@ class TelenorRepository {
         });
     };
 
-    async getConsentFromTP(body, apiToken) {
+    async getConsentFromTP(body, apiToken, body) {
         try {
             let form = {
+                "msisdn": body.msisdn,
+                "serviceId": body.serviceId,
+                "channel": 'API',
                 "cid": body.correlationId,
-                "token": body.token,
                 "action": 'submit',
+                "token": body.token,
             }
             return new Promise(function(resolve, reject) {
-                axios.post('https://apis.telenor.com.pk/cms/v2/consent', form, {headers: {'Authorization': 'Bearer '+apiToken, 'Content-Type': 'application/json' }}).then(function(response){
+                axios.post('https://apis.telenor.com.pk/cms/v1/consent', form, {headers: {'Authorization': 'Bearer '+apiToken, 'Content-Type': 'application/json' }}).then(function(response){
                     resolve(response.data);
                 }).catch(function(err){
                     console.log(err);
