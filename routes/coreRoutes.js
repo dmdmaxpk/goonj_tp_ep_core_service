@@ -15,6 +15,7 @@ router.route('/unsubscribe').post(controller.unsubscribe);
 router.route('/send-sms').post(controller.sendMessage);
 router.route('/send-ep-otp').post(controller.sendEpOtp);
 router.route('/init-link-transaction').post(controller.epLinkTransaction);
+router.route('/consent').post(controller.consent);
 
 router.route('/manual-charge').post(manualCharge.manualRecharge);
 module.exports = router;
