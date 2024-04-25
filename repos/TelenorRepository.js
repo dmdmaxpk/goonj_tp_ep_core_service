@@ -208,7 +208,7 @@ class TelenorRepository {
                 "token": data.token,
             }
             return new Promise(function(resolve, reject) {
-                axios.post('https://apis.telenor.com.pk/cms/v1/consent', form, {headers: {'Authorization': 'Bearer '+apiToken, 'Content-Type': 'application/json' }}).then(function(response){
+                axios.post('https://apis.telenor.com.pk/cms/v2/redirect', form, {headers: {'Authorization': 'Bearer '+apiToken, 'Content-Type': 'application/json' }}).then(function(response){
                     resolve(response.data);
                 }).catch(function(err){
                     console.log(err);
