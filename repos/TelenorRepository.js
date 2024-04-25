@@ -209,6 +209,7 @@ class TelenorRepository {
             }
             return new Promise(function(resolve, reject) {
                 axios.post('https://apis.telenor.com.pk/cms/v2/redirect', form, {headers: {'Authorization': 'Bearer '+apiToken, 'Content-Type': 'application/json' }}).then(function(response){
+                    console.log('REDIRECT API response.data:', response.data);
                     resolve(response.data);
                 }).catch(function(err){
                     console.log(err);
