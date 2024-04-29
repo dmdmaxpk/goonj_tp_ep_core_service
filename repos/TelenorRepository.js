@@ -199,6 +199,7 @@ class TelenorRepository {
 
     async getConsentFromTP(data, apiToken, body) {
         try {
+            console.log('apiToken', apiToken);
             let form = {
                 "msisdn": body.msisdn,
                 "serviceId": body.serviceId,
@@ -207,6 +208,7 @@ class TelenorRepository {
                 "action": 'submit',
                 "token": data.token,
             }
+            console.log('form', form);
             return new Promise(function(resolve, reject) {
                 axios.post('https://apis.telenor.com.pk/cms/v2/redirect', form, {headers: {'Authorization': 'Bearer '+apiToken, 'Content-Type': 'application/json' }}).then(function(response){
                     console.log('REDIRECT API response.data:', response.data);
