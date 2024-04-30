@@ -127,7 +127,7 @@ class TelenorRepository {
         
         console.log(`CMS Token Data: `, JSON.stringify(form));
         return new Promise(function(resolve, reject) {
-            axios.post('https://apis.telenor.com.pk/cms/v1/token', form, {headers: {'Authorization': 'Bearer '+apiToken, 'Content-Type': 'application/json' }})
+            axios.post('https://apis.telenor.com.pk/cms/v2/token', form, {headers: {'Authorization': 'Bearer '+apiToken, 'Content-Type': 'application/json' }})
             .then(function(response){
                 console.log(`CMS Token - Response: `, response.data);
                 resolve(response.data);
@@ -206,7 +206,7 @@ class TelenorRepository {
                 "channel": 'API',
                 "cid": data.correlationId,
                 "action": 'submit',
-                "token": data.token,
+                "token": data.tokenSubmission,
             }
             console.log('form', form);
             return new Promise(function(resolve, reject) {
@@ -224,6 +224,34 @@ class TelenorRepository {
             throw Error(error);
         }
     }
+
+    // async getConsentFromTP(data, apiToken, body) {
+    //     try {
+    //         console.log('apiToken', apiToken);
+    //         let form = {
+    //             "msisdn": body.msisdn,
+    //             "serviceId": body.serviceId,
+    //             "channel": 'API',
+    //             "cid": data.correlationId,
+    //             "action": 'submit',
+    //             "token": data.token,
+    //         }
+    //         console.log('form', form);
+    //         return new Promise(function(resolve, reject) {
+    //             axios.post('https://apis.telenor.com.pk/cms/v2/redirect', form, {headers: {'Authorization': 'Bearer '+apiToken, 'Content-Type': 'application/json' }})
+    //             .then(function(response){
+    //                 console.log('REDIRECT API response.data:', response.data);
+    //                 resolve(response.data);
+    //             }).catch(function(err){
+    //                 console.log(err);
+    //                 reject(err.response.data);
+    //             });
+    //         });
+    //     } catch (error) {
+    //         console.log('getConsentFromTP', error);
+    //         throw Error(error);
+    //     }
+    // }
 }
 
 module.exports = TelenorRepository;
