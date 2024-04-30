@@ -56,6 +56,21 @@ exports.cmsToken = async (req, res) => {
     }
 }
 
+exports.cmsTokenV2 = async (req, res) => {
+    let apiToken = await apiTokenRepo.getToken();
+    let {msisdn, serviceId} = req.body;
+    console.log('CMS Token', msisdn);
+    if(apiToken && msisdn && serviceId){
+        let startTime = new Date();
+        let response = await tpRepo.cmsTokenV2(msisdn, serviceId, apiToken);
+        let endTime = new Date() - startTime;
+
+        res.send({code: config.codes.code_success, response_time: timeTakeByChargeApi(endTime), response});
+    }else{
+        res.send({code: config.codes.code_error, message: 'Api token/critical parameters are missing.'});
+    }
+}
+
 exports.unsubscribe = async (req, res) => {
     let apiToken = await apiTokenRepo.getToken();
     let {msisdn, serviceId} = req.body;

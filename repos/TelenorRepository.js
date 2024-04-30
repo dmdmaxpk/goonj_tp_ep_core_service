@@ -158,6 +158,32 @@ class TelenorRepository {
         });
     }
 
+    async cmsTokenV2(msisdn, serviceId, apiToken)  {
+
+        let form = {
+            "msisdn": msisdn,
+            "serviceId": serviceId,
+            "channel":"API"
+        }
+        
+        console.log(`CMS Token Data: `, JSON.stringify(form));
+        return new Promise(function(resolve, reject) {
+            axios.post('https://apis.telenor.com.pk/cms/v2/token', form, {headers: {'Authorization': 'Bearer '+apiToken, 'Content-Type': 'application/json' }})
+            .then(function(response){
+                console.log(`CMS Token - Response: `, response.data);
+                resolve(response.data);
+            }).catch(function(err){
+                if(err && err.response && err.response.data){
+                    console.error(`CMS Token - Error: `, err.response.data)
+                    resolve(err.response.data);
+                }else{
+                    console.error(err);
+                    reject({error_message: err.message});
+                }
+            });
+        });
+    }
+
     async unsubscribe(msisdn, serviceId, apiToken)  {
         let form = {"msisdn": msisdn, "serviceId": serviceId, "channel": "API"};
         console.log(`Form Data - Unsub V2: `, JSON.stringify(form), ' T ', apiToken);
