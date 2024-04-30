@@ -127,7 +127,7 @@ class TelenorRepository {
         
         console.log(`CMS Token Data: `, JSON.stringify(form));
         return new Promise(function(resolve, reject) {
-            axios.post('https://apis.telenor.com.pk/cms/v2/token', form, {headers: {'Authorization': 'Bearer '+apiToken, 'Content-Type': 'application/json' }})
+            axios.post('https://apis.telenor.com.pk/cms/v1/token', form, {headers: {'Authorization': 'Bearer '+apiToken, 'Content-Type': 'application/json' }})
             .then(function(response){
                 console.log(`CMS Token - Response: `, response.data);
                 resolve(response.data);
