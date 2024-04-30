@@ -159,13 +159,11 @@ class TelenorRepository {
     }
 
     async cmsTokenV2(msisdn, serviceId, apiToken)  {
-
         let form = {
             "msisdn": msisdn,
             "serviceId": serviceId,
             "channel":"API"
         }
-        
         console.log(`CMS Token Data: `, JSON.stringify(form));
         return new Promise(function(resolve, reject) {
             axios.post('https://apis.telenor.com.pk/cms/v2/token', form, {headers: {'Authorization': 'Bearer '+apiToken, 'Content-Type': 'application/json' }})
@@ -223,16 +221,16 @@ class TelenorRepository {
         });
     };
 
-    async getConsentFromTP(data, apiToken, body) {
+    async getConsentFromTP(apiToken, body) {
         try {
             console.log('apiToken', apiToken);
             let form = {
                 "msisdn": body.msisdn,
                 "serviceId": body.serviceId,
                 "channel": 'API',
-                "cid": data.correlationId,
+                "cid": body.correlationId,
                 "action": 'submit',
-                "token": data.tokenSubmission,
+                "token": body.tokenSubmission,
             }
             console.log('form', form);
             return new Promise(function(resolve, reject) {

@@ -220,13 +220,8 @@ exports.consent = async (req, res) => {
     let apiToken = await apiTokenRepo.getToken();
     let {msisdn, serviceId} = req.body;
     console.log('req.body', req.body);
-    console.log('CMS Token', msisdn);
     if(apiToken && msisdn && serviceId){
-        let startTime = new Date();
-        let cmsTokenResponse = await tpRepo.cmsToken(msisdn, serviceId, apiToken);
-        console.log('cmsTokenResponse', cmsTokenResponse);
-        let endTime = new Date() - startTime;
-        const tpConsent = await tpRepo.getConsentFromTP(cmsTokenResponse, apiToken, req.body);
+        const tpConsent = await tpRepo.getConsentFromTP(apiToken, req.body);
         res.send(tpConsent);
     }else{
         res.send({code: config.codes.code_error, message: 'Api token/critical parameters are missing.'});
